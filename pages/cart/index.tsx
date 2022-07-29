@@ -1,11 +1,13 @@
-import React from "react"
+import React,{useState,useEffect} from "react"
 import Nav from "../../components/nav"
-
-export default function Cart() {
+import ShoppingCart from "../../components/shoppingCart"
+export default function Cart(){
   return (
     <div>
       <Nav/>
-      <h1 className="font-bold">Cart</h1>
+      <div className="pt-20">
+        <ShoppingCart/>
+      </div>
     </div>
   )
 }

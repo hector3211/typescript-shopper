@@ -1,5 +1,6 @@
 import React from "react"
 import useThemeStore from "../store/theme"
+import FeaturedProduct from "../utils/productList"
 const Hero = () => {
   const themeState = useThemeStore((state) => state.theme)
   return(
@@ -12,12 +13,11 @@ const Hero = () => {
       </h1>
       <p className="mb-8 leading-relaxed">Copper mug try-hard pitchfork pour-over freegan heirloom neutra air plant cold-pressed tacos poke beard tote bag. Heirloom echo park mlkshk tote bag selvage hot chicken authentic tumeric truffaut hexagon try-hard chambray.</p>
       <div className="flex justify-center">
-        <button className="mx-2 btn btn-accent">Button</button>
-        <button className="mx-2 btn btn-primary">Button</button>
+        <button className="mx-2 btn btn-primary">Add to cart</button>
       </div>
     </div>
     <div className="w-5/6 lg:max-w-lg lg:w-full md:w-1/2">
-      <img className="object-cover object-left rounded-tl-full rounded-md" alt="hero" src="https://images.pexels.com/photos/3780681/pexels-photo-3780681.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"/>
+      <img src={FeaturedProduct[2].image} className="object-cover rounded-tl-full rounded-md" alt="hero"/>
     </div>
   </div>
 </section>

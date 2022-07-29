@@ -1,27 +1,37 @@
-import React,{useState} from "react"
+import React,{useState,useEffect} from "react"
 import {BsMoon,BsSun} from "react-icons/bs"
+import {FiShoppingCart} from "react-icons/fi"
 import {signIn,signOut,useSession} from "next-auth/react"
 import useThemeStore from "../store/theme"
+import {useStore} from "../store/store"
+const useHasHydrated = () => {
+  const [hasHydrated, setHasHydrated] = useState<boolean>(false);
+  useEffect(() => {
+    setHasHydrated(true);
+  }, []);
 
+  return hasHydrated;
+};
 const Nav = () => {
+  const hasHydrated = useHasHydrated();
   const {theme,setTheme} = useThemeStore()
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false) 
   const [userInfo, setUserInfo] = useState<boolean>(false)
   const { data: session, status } = useSession();
-  
+  const {cart}  = useStore()  
   return (
-    <div className=" navbar md:px-20">
+    <div className={`fixed navbar z-50 md:px-20 ${(theme ? "bg-gray-600":"bg-gray-400")}`}>
       <div className="flex-1">
         <a className="mx-2 text-xl text-2xl font-bold normal-case btn btn-ghost">Shopper</a>
         <label className="swap swap-rotate">
             <input type="checkbox" />
           {theme ? (
             <button onClick={()=> setTheme(false)}>{
-            <BsSun className="w-10 h-10 swap-inner" />
+            <BsSun className="w-8 h-8 swap-inner" />
             }</button>
           ):(
             <button onClick={()=> setTheme(true)}>{
-            <BsMoon className="w-10 h-10 swap-inner" />
+            <BsMoon className="w-8 h-8 swap-inner" />
             }</button>
           )}
         </label>
@@ -29,7 +39,7 @@ const Nav = () => {
       <div className="relative flex-none mr-2">
       {session && (
         <>
-        <div className="avatar">
+        <div className="avatar online">
           <div className="w-10 mr-2 rounded-full ring ring-accent ring-offset-base-100 ring-offset-2">
           <button onClick={() => setUserInfo(!userInfo)}>
             <img src={session?.user.image} alt="avatar"/>
@@ -44,6 +54,10 @@ const Nav = () => {
         )}
         </>
       )}
+        {hasHydrated && cart.length > 0 && (
+        <div className="absolute flex items-center justify-center w-4 h-4 text-center bg-red-500 rounded-full right-24 top-1">{cart.length}</div>
+        )}
+        <a className="mx-2 " href={"/cart"}>{<FiShoppingCart className="w-8 h-8"/>}</a>
         <button onClick={()=> setIsMenuOpen(!isMenuOpen)} className="mx-2 btn btn-outline">
           Menu
         </button>
@@ -55,8 +69,6 @@ const Nav = () => {
           )}>
           <ul className="absolute right-0 p-2 mt-3 shadow bg-base-100 top-10 menu menu-compact dropdown-content rounded-box w-52">
             <li><a href={"/"}>Home</a></li>
-            <li><a href={"/products"}>Products</a></li>
-            <li><a href={"/cart"}>Cart</a></li>
             {!session ? (
               <li><a href={"/api/auth/signin"} onClick={()=> signIn()}>Log in</a></li>
             ):(
