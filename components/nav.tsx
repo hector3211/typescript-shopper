@@ -13,16 +13,27 @@ const useHasHydrated = () => {
   return hasHydrated;
 };
 const Nav = () => {
+  const [navBlur,setNavBlur] = useState<boolean>(false)
   const hasHydrated = useHasHydrated();
   const {theme,setTheme} = useThemeStore()
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false) 
   const [userInfo, setUserInfo] = useState<boolean>(false)
   const { data: session, status } = useSession();
   const {cart}  = useStore()  
+  const navbarBlurEffect = () =>{
+    if(window.scrollY > 50){
+      setNavBlur(true)
+    }else{
+      setNavBlur(false)
+    }
+  }
+  if (typeof window !== "undefined"){
+    window.addEventListener("scroll",navbarBlurEffect)
+  }
   return (
-    <div className={`fixed navbar z-50 md:px-20 ${(theme ? "bg-gray-600":"bg-gray-400")}`}>
+    <div className={`fixed navbar z-50 md:px-20 ${(navBlur ? ("backdrop-blur-lg bg-gray-900 bg-opacity-50"):("bg-gray-500"))}`}>
       <div className="flex-1">
-        <a className="mx-2 text-xl text-2xl font-bold normal-case btn btn-ghost">Shopper</a>
+        <a href={"/"} className="mx-2 text-xl text-2xl font-bold normal-case btn btn-ghost">Shopper</a>
         <label className="swap swap-rotate">
             <input type="checkbox" />
           {theme ? (
@@ -67,7 +78,7 @@ const Nav = () => {
           ):(
             "text-black"
           )}>
-          <ul className="absolute right-0 p-2 mt-3 shadow bg-base-100 top-10 menu menu-compact dropdown-content rounded-box w-52">
+          <ul className="absolute right-0 p-2 mt-3 bg-gray-500 shadow top-14 menu menu-compact dropdown-content rounded-box w-52">
             <li><a href={"/"}>Home</a></li>
             {!session ? (
               <li><a href={"/api/auth/signin"} onClick={()=> signIn()}>Log in</a></li>

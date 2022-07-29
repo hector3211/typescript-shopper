@@ -5,23 +5,24 @@ interface ShoppingCart {
   id: number;
   name: string;
   image: string;
+  price: number;
 }
 
 interface ShoppingCartState {
   cart: ShoppingCart[];
-  addToCart: (name: string,image:string) => void;
+  addToCart: (name: string,image:string,price:number) => void;
   removeItemFromCart: (id: number) => void;
 }
 export const useStore = create<ShoppingCartState>()(
   persist(((set) => ({
     cart: [],
-    addToCart: (name: string,image:string) =>
+    addToCart: (name: string,image:string,price:number) =>
       set((state: any) => ({
         ...state,
         cart: [
           ...state.cart,
           // try name.name
-          { id: Math.round(Math.random() * 100), name: name ,image:image},
+          { id: Math.round(Math.random() * 100), name: name ,image:image,price:price},
         ],
       })),
     removeItemFromCart: (id: number) =>
