@@ -33,7 +33,7 @@ const Nav = () => {
   return (
     <div className={`fixed navbar z-50 md:px-20 ${(navBlur ? ("backdrop-blur-lg bg-gray-900 bg-opacity-50"):("bg-gray-500"))}`}>
       <div className="flex-1">
-        <a href={"/"} className="mx-2 text-xl text-2xl font-bold normal-case btn btn-ghost">Shopper</a>
+      <a href={"/"} className="mx-2 text-2xl font-bold normal-case md:text-3xl md:3xl btn btn-ghost">Shopper</a>
         <label className="swap swap-rotate">
             <input type="checkbox" />
           {theme ? (

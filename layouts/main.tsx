@@ -21,7 +21,7 @@ const Main: React.FC <Props> = ({ children }) => {
         <title>shopper</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </NextHead>
-      <main data-theme={(themeState ? "dark":"light")} className="max-w-full box-border">
+      <main data-theme={(hasHydrated && themeState ? "dark":"light")} className="max-w-full box-border">
         {children}
       </main>
     </div>
