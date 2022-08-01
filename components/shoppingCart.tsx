@@ -16,7 +16,7 @@ const ShoppingCart = () => {
   const [toast,setToast] = useState<boolean>(false)
   const handleCheckOut = () =>{
     if(!session?.user){
-      setToast(true)
+      setInterval(setToast(true),3000,setToast(false))
     }else{
       setToast(false)
     }
@@ -35,7 +35,7 @@ const ShoppingCart = () => {
         ))}
       <div className="flex justify-end mt-5">
         <p className="px-2 text-2xl">Total:</p>
-        <p className="text-2xl">{`$${hasHydrated && cart.reduce((acc,product)=> acc + product.price,0)}`}</p>
+        <p className="text-2xl">{`$${hasHydrated && cart.reduce((acc,product)=> acc + product.price,0).toFixed(2)}`}</p>
       </div>
       <div className="flex justify-center">
         {toast &&
